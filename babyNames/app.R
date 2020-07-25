@@ -9,6 +9,8 @@
 
 library(shiny)
 library(tidyverse)
+library(babynames)
+data(babynames)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -28,7 +30,8 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
     output$trend <- renderPlot({
-        ggplot()
+        ggplot(subset(babynames, name==input$name))+
+            geom_line(aes(x=year, y=prop, color=sex))
     })
 }
 
